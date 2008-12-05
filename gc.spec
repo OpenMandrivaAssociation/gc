@@ -6,7 +6,7 @@
 Summary:	Conservative garbage collector for C
 Name:		gc
 Version:	7.1
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	BSD
 Group:		System/Libraries
 URL:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
@@ -58,6 +58,11 @@ Static libraries neded to develop programs that use Bohem's GC
 rm -f libtool libtool.m4
 libtoolize --force
 autoreconf -i
+
+# or else tkhtml3 won't build on x86-64
+%ifarch x86_64
+export CFLAGS="%{optflags} -fPIC"
+%endif
 
 %configure2_5x \
     --disable-dependency-tracking \
