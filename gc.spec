@@ -6,11 +6,13 @@
 Summary:	Conservative garbage collector for C
 Name:		gc
 Version:	7.1
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	BSD
 Group:		System/Libraries
 URL:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
 Source0:	http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_source/%{name}-%{version}.tar.gz
+# fix trying to install two header files twice in the same install command (fixes build)
+Patch0:		gc-duplicate-headers-install.patch
 BuildRequires:	libatomic_ops-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
@@ -52,6 +54,7 @@ Static libraries neded to develop programs that use Bohem's GC
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 # refresh auto*/libtool to purge rpaths
