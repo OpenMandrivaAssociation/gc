@@ -48,7 +48,7 @@ Provides:	%{name}-static-devel = %{version}-%{release}
 Requires:	%{devname} = %{version}-%{release}
 
 %description -n	%{static}
-Static libraries neded to develop programs that use Bohem's GC
+Static libraries needed to develop programs that use Bohem's GC
 
 %prep
 %setup -q -n %{name}-%{ver}
