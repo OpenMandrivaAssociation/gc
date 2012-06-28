@@ -45,7 +45,7 @@ Group:		Development/C
 License: 	BSD
 Obsoletes:	%{mklibname gc 1 -d -s} < 7.1
 Provides:	%{name}-static-devel = %{version}-%{release}
-Requires:	%{libname} = %{version}-%{release}
+Requires:	%{devname} = %{version}-%{release}
 
 %description -n	%{static}
 Static libraries neded to develop programs that use Bohem's GC
