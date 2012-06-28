@@ -52,13 +52,12 @@ Static libraries neded to develop programs that use Bohem's GC
 
 %prep
 %setup -q -n %{name}-%{ver}
-
-%build
 # refresh auto*/libtool to purge rpaths
 rm -f libtool libtool.m4
 libtoolize --force
 autoreconf -i
 
+%build
 %configure2_5x \
     --disable-dependency-tracking \
     --enable-cplusplus \
