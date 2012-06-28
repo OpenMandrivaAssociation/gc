@@ -1,7 +1,7 @@
-%define	major 1
-%define libname %mklibname %{name} %{major}
-%define develname %mklibname %{name} -d
-%define staticname %mklibname %{name} -d -s
+%define	major	1
+%define	libname	%mklibname %{name} %{major}
+%define	devname	%mklibname %{name} -d
+%define	static	%mklibname %{name} -d -s
 
 Summary:	Conservative garbage collector for C
 Name:		gc
@@ -13,13 +13,12 @@ Group:		System/Libraries
 URL:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
 Source0:	http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_source/%{name}-%{version}.tar.gz
 BuildRequires:	libatomic_ops-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Boehm's GC is a garbage collecting storage allocator that is intended to be
 used as a plug-in replacement for C's malloc.
 
-%package -n %{libname}
+%package -n	%{libname}
 Summary:	Conservative garbage collector for C
 Group:		System/Libraries
 Obsoletes:	%{name} < 7.1
@@ -29,7 +28,7 @@ Provides:	%{name} = %{version}-%{release}
 Boehm's GC is a garbage collecting storage allocator that is intended to be
 used as a plug-in replacement for C's malloc.
 
-%package -n %{develname}
+%package -n	%{devname}
 Summary:	Development files and documentation for Bohem's GC
 Group:		Development/C
 License: 	BSD
@@ -37,10 +36,10 @@ Obsoletes:	%{mklibname gc 1 -d} < 7.1
 Provides:	lib%{name}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
 
-%description -n %{develname}
+%description -n %{devname}
 Header files and documentation needed to develop programs that use Bohem's GC
 
-%package -n %{staticname}
+%package -n	%{static}
 Summary:	Static libraries for Bohem's GC
 Group:		Development/C
 License: 	BSD
@@ -48,7 +47,7 @@ Obsoletes:	%{mklibname gc 1 -d -s} < 7.1
 Provides:	lib%{name}-static-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
 
-%description -n	%{staticname}
+%description -n	%{static}
 Static libraries neded to develop programs that use Bohem's GC
 
 %prep
@@ -70,9 +69,9 @@ export CFLAGS="%{optflags} -fPIC"
 %configure2_5x \
     --disable-dependency-tracking \
     --enable-cplusplus \
-    %ifarch %{ix86}
+%ifarch %{ix86}
     --enable-parallel-mark \
-    %endif
+%endif
     --enable-threads=pthreads
         
 %make
@@ -81,34 +80,17 @@ export CFLAGS="%{optflags} -fPIC"
 make check
 
 %install
-rm -rf %{buildroot}
-
 %makeinstall_std
 
 rm -rf %{buildroot}%{_datadir}
 
 install -m644 doc/gc.man -D %{buildroot}%{_mandir}/man3/gc.3
 
-#rm -f %{buildroot}%{_docdir}/gc
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%clean
-rm -rf %{buildroot}
-
 %files -n %{libname}
-%defattr(-, root, root)
 %doc README.QUICK
 %{_libdir}/*.so.%{major}*
 
-%files -n %{develname}
-%defattr(-, root, root)
+%files -n %{devname}
 %doc doc/*.html
 %{_libdir}/*.so
 %dir %{_includedir}/gc
@@ -117,6 +99,5 @@ rm -rf %{buildroot}
 %{_libdir}/pkgconfig/*.pc
 %{_mandir}/man?/*
 
-%files -n %{staticname}
-%defattr(-, root, root)
+%files -n %{static}
 %{_libdir}/*.a
