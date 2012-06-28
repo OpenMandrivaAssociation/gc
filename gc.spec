@@ -59,13 +59,6 @@ rm -f libtool libtool.m4
 libtoolize --force
 autoreconf -i
 
-# or else tkhtml3 won't build on x86-64. the clean way to do this is
-# to patch it into the Makefile, but then it doesn't get used for
-# mach_dep.lo, and I can't figure out why not - AdamW 2008/12
-%ifarch x86_64
-export CFLAGS="%{optflags} -fPIC"
-%endif
-
 %configure2_5x \
     --disable-dependency-tracking \
     --enable-cplusplus \
