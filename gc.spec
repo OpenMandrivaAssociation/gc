@@ -33,7 +33,7 @@ Summary:	Development files and documentation for Bohem's GC
 Group:		Development/C
 License: 	BSD
 Obsoletes:	%{mklibname gc 1 -d} < 7.1
-Provides:	lib%{name}-devel = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
 
 %description -n %{devname}
@@ -44,7 +44,7 @@ Summary:	Static libraries for Bohem's GC
 Group:		Development/C
 License: 	BSD
 Obsoletes:	%{mklibname gc 1 -d -s} < 7.1
-Provides:	lib%{name}-static-devel = %{version}-%{release}
+Provides:	%{name}-static-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
 
 %description -n	%{static}
