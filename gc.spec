@@ -51,7 +51,7 @@ Requires:	%{devname} = %{version}-%{release}
 Static libraries neded to develop programs that use Bohem's GC
 
 %prep
-%setup -q -n %{name}-%{ver}
+%setup -q -n %{name}-%{version}%{prever}
 # refresh auto*/libtool to purge rpaths
 rm -f libtool libtool.m4
 libtoolize --force
