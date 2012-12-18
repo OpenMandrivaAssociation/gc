@@ -3,15 +3,15 @@
 %define	devname	%mklibname %{name} -d
 %define	static	%mklibname %{name} -d -s
 
+%define prever	alpha2
 Summary:	Conservative garbage collector for C
 Name:		gc
-%define	ver	7.2
-Version:	%{ver}c
-Release:	1
+Version:	7.3
+Release:	%mkrel 0.%{prever}.1
 License:	BSD
 Group:		System/Libraries
 URL:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
-Source0:	http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_source/%{name}-%{version}.tar.gz
+Source0:	http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_source/%{name}-%{version}%{prever}.tar.gz
 BuildRequires:	libatomic_ops-devel
 
 %description
@@ -93,72 +93,3 @@ install -m644 doc/gc.man -D %{buildroot}%{_mandir}/man3/gc.3
 
 %files -n %{static}
 %{_libdir}/*.a
-
-
-%changelog
-* Thu Jun 28 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 7.2c-1
-+ Revision: 807442
-- make static package require devel package, not library package
-- make provides for devel & static package lib neutral
-- move autoreconf & libtoolize to %%prep
-- don't manually add -fPIC to %%optflags on x86_64, it's now part of default
-  %optflags for x86_64
-- cleanups
-- new version
-
-* Tue May 03 2011 Oden Eriksson <oeriksson@mandriva.com> 7.1-8
-+ Revision: 664810
-- mass rebuild
-
-* Thu Dec 02 2010 Oden Eriksson <oeriksson@mandriva.com> 7.1-7mdv2011.0
-+ Revision: 605440
-- rebuild
-
-* Wed Mar 17 2010 Oden Eriksson <oeriksson@mandriva.com> 7.1-6mdv2010.1
-+ Revision: 522708
-- rebuilt for 2010.1
-
-* Thu Sep 24 2009 Olivier Blin <blino@mandriva.org> 7.1-5mdv2010.0
-+ Revision: 448322
-- fix mips support, "nice" regression from 6.8 (from Arnaud Patard)
-
-* Sat Jul 18 2009 Anssi Hannula <anssi@mandriva.org> 7.1-4mdv2010.0
-+ Revision: 396975
-- fix build failure due to duplicate headers in the same install command
-  (duplicate-headers-install.patch, from Mika Laitio)
-
-* Fri Dec 05 2008 Adam Williamson <awilliamson@mandriva.org> 7.1-3mdv2009.1
-+ Revision: 310348
-- better comment
-- build with -fPIC on x86-64 (tkhtml3 build fails without)
-
-* Fri Sep 26 2008 Oden Eriksson <oeriksson@mandriva.com> 7.1-2mdv2009.0
-+ Revision: 288616
-- rebuild
-
-* Fri Jul 04 2008 Tomasz Pawel Gajc <tpg@mandriva.org> 7.1-1mdv2009.0
-+ Revision: 231792
-- rename
-- update to new version 7.1
-- new library policy
-- spec file clean
-
-  + Thierry Vignaud <tv@mandriva.org>
-    - rebuild
-
-  + Pixel <pixel@mandriva.com>
-    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
-
-* Sun Jan 13 2008 Thierry Vignaud <tv@mandriva.org> 0:6.8-2mdv2008.1
-+ Revision: 150564
-- rebuild
-- kill re-definition of %%buildroot on Pixel's request
-
-  + Olivier Blin <blino@mandriva.org>
-    - restore BuildRoot
-
-* Thu May 17 2007 Herton Ronaldo Krzesinski <herton@mandriva.com.br> 0:6.8-1mdv2008.0
-+ Revision: 27627
-- Updated to 6.8.
-- Minor identation fixes.
-
