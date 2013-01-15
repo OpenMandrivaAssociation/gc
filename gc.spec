@@ -12,6 +12,7 @@ License:	BSD
 Group:		System/Libraries
 URL:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
 Source0:	http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_source/%{name}-%{version}%{prever}.tar.gz
+Patch0:		gc-7.3-automake-1.13.patch
 BuildRequires:	libatomic_ops-devel
 
 %description
@@ -52,6 +53,7 @@ Static libraries neded to develop programs that use Bohem's GC
 
 %prep
 %setup -q -n %{name}-%{version}%{prever}
+%apply_patches
 # refresh auto*/libtool to purge rpaths
 rm -f libtool libtool.m4
 libtoolize --force
