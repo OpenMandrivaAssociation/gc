@@ -1,4 +1,3 @@
-%define prever	alpha2
 %define	major	1
 %define	libname	%mklibname %{name} %{major}
 %define	libcord %mklibname cord %{major}
@@ -8,13 +7,12 @@
 
 Summary:	Conservative garbage collector for C
 Name:		gc
-Version:	7.3
-Release:	0.%{prever}.2
+Version:	7.4.0
+Release:	1
 License:	BSD
 Group:		System/Libraries
 Url:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
-Source0:	http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_source/%{name}-%{version}%{prever}.tar.gz
-Patch0:		gc-7.3-automake-1.13.patch
+Source0:	http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_source/%{name}-%{version}.tar.gz
 BuildRequires:	pkgconfig(atomic_ops)
 
 %description
@@ -60,6 +58,7 @@ Header files and documentation needed to develop programs that use Bohem's GC
 %package -n	%{static}
 Summary:	Static libraries for Bohem's GC
 Group:		Development/C
+%define		build_ada		0
 Provides:	%{name}-static-devel = %{version}-%{release}
 Requires:	%{devname} = %{version}-%{release}
 
@@ -67,7 +66,7 @@ Requires:	%{devname} = %{version}-%{release}
 Static libraries needed to develop programs that use Bohem's GC
 
 %prep
-%setup -qn %{name}-%{version}%{prever}
+%setup -qn %{name}-%{version}
 %apply_patches
 # refresh auto*/libtool to purge rpaths
 rm -f libtool libtool.m4
@@ -78,6 +77,7 @@ autoreconf -i
 %configure2_5x \
 	--disable-dependency-tracking \
 	--enable-cplusplus \
+	--enable-static \
 %ifarch %{ix86}
 	--enable-parallel-mark \
 %endif
