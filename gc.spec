@@ -7,44 +7,44 @@
 
 Summary:	Conservative garbage collector for C
 Name:		gc
-Version:	7.4.0
-Release:	5
+Version:	7.6.0
+Release:	1
 License:	BSD
 Group:		System/Libraries
 Url:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
-Source0:	http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_source/%{name}-%{version}.tar.gz
+Source0:	https://github.com/ivmai/bdwgc/releases/download/v%{version}/%{name}-%{version}.tar.gz
 BuildRequires:	pkgconfig(atomic_ops)
 
 %description
 Boehm's GC is a garbage collecting storage allocator that is intended to be
 used as a plug-in replacement for C's malloc.
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	Conservative garbage collector for C
 Group:		System/Libraries
 Provides:	%{name} = %{version}-%{release}
 
-%description -n	%{libname}
+%description -n %{libname}
 Boehm's GC is a garbage collecting storage allocator that is intended to be
 used as a plug-in replacement for C's malloc.
 
-%package -n	%{libcord}
+%package -n %{libcord}
 Summary:	Conservative garbage collector for C
 Group:		System/Libraries
 Conflicts:	%{_lib}gc1 < 7.3-0.alpha2.2
 
-%description -n	%{libcord}
+%description -n %{libcord}
 This package contains a shared library for %{name}.
 
-%package -n	%{libgccpp}
+%package -n %{libgccpp}
 Summary:	Conservative garbage collector for C
 Group:		System/Libraries
 Conflicts:	%{_lib}gc1 < 7.3-0.alpha2.2
 
-%description -n	%{libgccpp}
+%description -n %{libgccpp}
 This package contains a shared library for %{name}.
 
-%package -n	%{devname}
+%package -n %{devname}
 Summary:	Development files and documentation for Bohem's GC
 Group:		Development/C
 Provides:	%{name}-devel = %{version}-%{release}
@@ -53,17 +53,17 @@ Requires:	%{libcord} = %{version}-%{release}
 Requires:	%{libgccpp} = %{version}-%{release}
 
 %description -n %{devname}
-Header files and documentation needed to develop programs that use Bohem's GC
+Header files and documentation needed to develop programs that use Bohem's GC.
 
-%package -n	%{static}
+%package -n %{static}
 Summary:	Static libraries for Bohem's GC
 Group:		Development/C
 %define		build_ada		0
 Provides:	%{name}-static-devel = %{version}-%{release}
 Requires:	%{devname} = %{version}-%{release}
 
-%description -n	%{static}
-Static libraries needed to develop programs that use Bohem's GC
+%description -n %{static}
+Static libraries needed to develop programs that use Bohem's GC.
 
 %prep
 %setup -qn %{name}-%{version}
@@ -74,7 +74,7 @@ libtoolize --force
 autoreconf -i
 
 %build
-%configure2_5x \
+%configure \
 	--disable-dependency-tracking \
 	--enable-cplusplus \
 	--enable-static \
@@ -82,7 +82,7 @@ autoreconf -i
 	--enable-parallel-mark \
 %endif
 	--enable-threads=pthreads
-        
+
 %make
 
 %check
@@ -115,4 +115,3 @@ install -m644 doc/gc.man -D %{buildroot}%{_mandir}/man3/gc.3
 
 %files -n %{static}
 %{_libdir}/*.a
-
