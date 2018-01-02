@@ -1,4 +1,4 @@
-%define	major	1
+%define	major 2
 %define	libname	%mklibname %{name} %{major}
 %define	libcord %mklibname cord %{major}
 %define	libgccpp %mklibname gccpp %{major}
