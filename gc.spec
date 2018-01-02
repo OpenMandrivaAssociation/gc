@@ -1,7 +1,9 @@
 %define	major 2
+%define cordmajor 1
+%define gccppmajor 1
 %define	libname	%mklibname %{name} %{major}
-%define	libcord %mklibname cord %{major}
-%define	libgccpp %mklibname gccpp %{major}
+%define	libcord %mklibname cord %{cordmajor}
+%define	libgccpp %mklibname gccpp %{gccppmajor}
 %define	devname	%mklibname %{name} -d
 %define	static	%mklibname %{name} -d -s
 
@@ -99,10 +101,10 @@ install -m644 doc/gc.man -D %{buildroot}%{_mandir}/man3/gc.3
 %{_libdir}/libgc.so.%{major}*
 
 %files -n %{libcord}
-%{_libdir}/libcord.so.%{major}*
+%{_libdir}/libcord.so.%{cordmajor}*
 
 %files -n %{libgccpp}
-%{_libdir}/libgccpp.so.%{major}*
+%{_libdir}/libgccpp.so.%{gccppmajor}*
 
 %files -n %{devname}
 %doc README.QUICK doc/*.html
