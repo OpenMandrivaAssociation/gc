@@ -7,7 +7,7 @@
 
 Summary:	Conservative garbage collector for C
 Name:		gc
-Version:	7.6.0
+Version:	7.6.2
 Release:	1
 License:	BSD
 Group:		System/Libraries
@@ -58,7 +58,7 @@ Header files and documentation needed to develop programs that use Bohem's GC.
 %package -n %{static}
 Summary:	Static libraries for Bohem's GC
 Group:		Development/C
-%define		build_ada		0
+%define		build_ada 0
 Provides:	%{name}-static-devel = %{version}-%{release}
 Requires:	%{devname} = %{version}-%{release}
 
