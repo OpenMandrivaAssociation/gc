@@ -1,15 +1,15 @@
-%define	major 2
+%define major 2
 %define cordmajor 1
 %define gccppmajor 1
-%define	libname	%mklibname %{name} %{major}
-%define	libcord %mklibname cord %{cordmajor}
-%define	libgccpp %mklibname gccpp %{gccppmajor}
-%define	devname	%mklibname %{name} -d
-%define	static	%mklibname %{name} -d -s
+%define libname %mklibname %{name} %{major}
+%define libcord %mklibname cord %{cordmajor}
+%define libgccpp %mklibname gccpp %{gccppmajor}
+%define devname %mklibname %{name} -d
+%define static %mklibname %{name} -d -s
 
 Summary:	Conservative garbage collector for C
 Name:		gc
-Version:	7.6.2
+Version:	7.6.6
 Release:	1
 License:	BSD
 Group:		System/Libraries
@@ -85,13 +85,13 @@ autoreconf -i
 %endif
 	--enable-threads=pthreads
 
-%make
+%make_build
 
 %check
 make check
 
 %install
-%makeinstall_std
+%make_install
 
 rm -rf %{buildroot}%{_datadir}
 
