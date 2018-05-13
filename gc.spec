@@ -1,3 +1,9 @@
+%ifarch aarch64
+# Workaround for compile-time failure: Unresolved symbol
+# __data_start at link time
+%global optflags %{optflags} -fuse-ld=bfd
+%endif
+
 %define major 1
 %define cordmajor 1
 %define gccppmajor 1
@@ -10,11 +16,14 @@
 Summary:	Conservative garbage collector for C
 Name:		gc
 Version:	7.6.6
-Release:	2
+Release:	3
 License:	BSD
 Group:		System/Libraries
 Url:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
 Source0:	https://github.com/ivmai/bdwgc/releases/download/v%{version}/%{name}-%{version}.tar.gz
+Patch0:		https://src.fedoraproject.org/rpms/gc/raw/master/f/0001-Add-initial-RISC-V-support.patch
+Patch1:		https://src.fedoraproject.org/rpms/gc/raw/master/f/0001-Merge-RISCV-32-64-bit-configurations-definition.patch
+Patch2:		https://src.fedoraproject.org/rpms/gc/raw/master/f/gc-7.6.4-dont_disable_exceptions.patch
 BuildRequires:	pkgconfig(atomic_ops)
 
 %description
@@ -76,14 +85,16 @@ libtoolize --force
 autoreconf -i
 
 %build
+export CPPFLAGS="$CPPFLAGS -DUSE_GET_STACKBASE_FOR_MAIN"
 %configure \
 	--disable-dependency-tracking \
 	--enable-cplusplus \
 	--enable-static \
+	--enable-large-config \
 %ifarch %{ix86}
 	--enable-parallel-mark \
 %endif
-	--enable-threads=pthreads
+	--enable-threads=posix
 
 %make_build
 
