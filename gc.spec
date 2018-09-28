@@ -21,8 +21,6 @@ License:	BSD
 Group:		System/Libraries
 Url:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
 Source0:	https://github.com/ivmai/bdwgc/releases/download/v%{version}/%{name}-%{version}.tar.gz
-Patch0:		https://src.fedoraproject.org/rpms/gc/raw/master/f/0001-Add-initial-RISC-V-support.patch
-Patch1:		https://src.fedoraproject.org/rpms/gc/raw/master/f/0001-Merge-RISCV-32-64-bit-configurations-definition.patch
 Patch2:		https://src.fedoraproject.org/rpms/gc/raw/master/f/gc-7.6.4-dont_disable_exceptions.patch
 BuildRequires:	pkgconfig(atomic_ops)
 
@@ -77,8 +75,8 @@ Requires:	%{devname} = %{version}-%{release}
 Static libraries needed to develop programs that use Bohem's GC.
 
 %prep
-%setup -qn %{name}-%{version}
-%apply_patches
+%autosetup -n %{name}-%{version} -p1
+
 # refresh auto*/libtool to purge rpaths
 rm -f libtool libtool.m4
 libtoolize --force
