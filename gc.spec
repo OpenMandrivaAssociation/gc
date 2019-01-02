@@ -15,8 +15,8 @@
 
 Summary:	Conservative garbage collector for C
 Name:		gc
-Version:	7.6.8
-Release:	2
+Version:	7.6.10
+Release:	1
 License:	BSD
 Group:		System/Libraries
 Url:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
