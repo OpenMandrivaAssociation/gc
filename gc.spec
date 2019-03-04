@@ -15,7 +15,7 @@
 
 Summary:	Conservative garbage collector for C
 Name:		gc
-Version:	7.6.10
+Version:	7.6.12
 Release:	1
 License:	BSD
 Group:		System/Libraries
