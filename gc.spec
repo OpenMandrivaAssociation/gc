@@ -15,13 +15,12 @@
 
 Summary:	Conservative garbage collector for C
 Name:		gc
-Version:	7.6.12
+Version:	8.0.4
 Release:	1
 License:	BSD
 Group:		System/Libraries
 Url:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
 Source0:	https://github.com/ivmai/bdwgc/releases/download/v%{version}/%{name}-%{version}.tar.gz
-Patch2:		https://src.fedoraproject.org/rpms/gc/raw/master/f/gc-7.6.4-dont_disable_exceptions.patch
 BuildRequires:	pkgconfig(atomic_ops)
 
 %description
@@ -67,7 +66,6 @@ Header files and documentation needed to develop programs that use Bohem's GC.
 %package -n %{static}
 Summary:	Static libraries for Bohem's GC
 Group:		Development/C
-%define		build_ada 0
 Provides:	%{name}-static-devel = %{version}-%{release}
 Requires:	%{devname} = %{version}-%{release}
 
@@ -75,7 +73,8 @@ Requires:	%{devname} = %{version}-%{release}
 Static libraries needed to develop programs that use Bohem's GC.
 
 %prep
-%autosetup -n %{name}-%{version} -p1
+%autosetup -p1
+%config_update
 
 # refresh auto*/libtool to purge rpaths
 rm -f libtool libtool.m4
@@ -89,9 +88,8 @@ export CPPFLAGS="$CPPFLAGS -DUSE_GET_STACKBASE_FOR_MAIN"
 	--enable-cplusplus \
 	--enable-static \
 	--enable-large-config \
-%ifarch %{ix86}
+	--with-libatomic-ops=yes \
 	--enable-parallel-mark \
-%endif
 	--enable-threads=posix
 
 %make_build
