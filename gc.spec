@@ -114,7 +114,7 @@ install -m644 doc/gc.man -D %{buildroot}%{_mandir}/man3/gc.3
 %{_libdir}/libgccpp.so.%{gccppmajor}*
 
 %files -n %{devname}
-%doc README.QUICK doc/*.html
+%doc README.QUICK doc/*
 %{_libdir}/*.so
 %dir %{_includedir}/gc
 %{_includedir}/%{name}/*
