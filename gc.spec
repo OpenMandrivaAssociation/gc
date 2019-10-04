@@ -1,3 +1,6 @@
+# (tpg) try to fix wrong relocated GC_is_heap_ptr sumbol
+%define _disable_lto 1
+
 %ifarch aarch64 %{riscv}
 # Workaround for compile-time failure: Unresolved symbol
 # __data_start at link time
@@ -16,14 +19,11 @@
 Summary:	Conservative garbage collector for C
 Name:		gc
 Version:	8.0.4
-Release:	2
+Release:	3
 License:	BSD
 Group:		System/Libraries
 Url:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
 Source0:	https://github.com/ivmai/bdwgc/releases/download/v%{version}/%{name}-%{version}.tar.gz
-## downstream patches
-# https://bugzilla.redhat.com/show_bug.cgi?id=1551671
-Patch100:	gc-7.6.4-dont_disable_exceptions.patch
 BuildRequires:	pkgconfig(atomic_ops)
 
 %description
