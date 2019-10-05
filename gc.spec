@@ -84,10 +84,10 @@ export CPPFLAGS="$CPPFLAGS -DUSE_GET_STACKBASE_FOR_MAIN"
 %make_build
 
 %check
-make check
+make check -C build
 
 %install
-%make_install
+%make_install -C build
 
 rm -rf %{buildroot}%{_datadir}
 
