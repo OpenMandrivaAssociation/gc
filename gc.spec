@@ -22,7 +22,6 @@ Group:		System/Libraries
 Url:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
 Source0:	https://github.com/ivmai/bdwgc/releases/download/v%{version}/%{name}-%{version}.tar.gz
 BuildRequires:	pkgconfig(atomic_ops)
-BuildRequires:	cmake
 
 %description
 Boehm's GC is a garbage collecting storage allocator that is intended to be
@@ -79,7 +78,14 @@ Static libraries needed to develop programs that use Bohem's GC.
 
 %build
 export CPPFLAGS="$CPPFLAGS -DUSE_GET_STACKBASE_FOR_MAIN"
-%cmake
+%configure \
+    --disable-dependency-tracking \
+    --enable-cplusplus \
+    --enable-static \
+    --enable-large-config \
+    --with-libatomic-ops=yes \
+    --enable-parallel-mark \
+    --enable-threads=posix
 
 %make_build
 
