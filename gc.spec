@@ -16,7 +16,7 @@
 Summary:	Conservative garbage collector for C
 Name:		gc
 Version:	8.0.4
-Release:	4
+Release:	5
 License:	BSD
 Group:		System/Libraries
 Url:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
@@ -59,6 +59,8 @@ Provides:	%{name}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
 Requires:	%{libcord} = %{version}-%{release}
 Requires:	%{libgccpp} = %{version}-%{release}
+# (tpg) somehow this is not required by default
+Requires:	pkgconfig(atomic_ops)
 
 %description -n %{devname}
 Header files and documentation needed to develop programs that use Bohem's GC.
