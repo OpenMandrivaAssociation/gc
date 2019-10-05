@@ -1,6 +1,3 @@
-# (tpg) try to fix wrong relocated GC_is_heap_ptr sumbol
-%define _disable_lto 1
-
 %ifarch aarch64 %{riscv}
 # Workaround for compile-time failure: Unresolved symbol
 # __data_start at link time
@@ -19,12 +16,13 @@
 Summary:	Conservative garbage collector for C
 Name:		gc
 Version:	8.0.4
-Release:	3
+Release:	4
 License:	BSD
 Group:		System/Libraries
 Url:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
 Source0:	https://github.com/ivmai/bdwgc/releases/download/v%{version}/%{name}-%{version}.tar.gz
 BuildRequires:	pkgconfig(atomic_ops)
+BuildRequires:	cmake
 
 %description
 Boehm's GC is a garbage collecting storage allocator that is intended to be
@@ -79,29 +77,17 @@ Static libraries needed to develop programs that use Bohem's GC.
 %autosetup -p1
 %config_update
 
-# refresh auto*/libtool to purge rpaths
-rm -f libtool libtool.m4
-libtoolize --force
-autoreconf -i
-
 %build
 export CPPFLAGS="$CPPFLAGS -DUSE_GET_STACKBASE_FOR_MAIN"
-%configure \
-	--disable-dependency-tracking \
-	--enable-cplusplus \
-	--enable-static \
-	--enable-large-config \
-	--with-libatomic-ops=yes \
-	--enable-parallel-mark \
-	--enable-threads=posix
+%cmake
 
-%make_build
+%make_build -C build
 
 %check
-make check
+make check -C build
 
 %install
-%make_install
+%make_install -C build
 
 rm -rf %{buildroot}%{_datadir}
 
