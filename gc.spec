@@ -81,13 +81,13 @@ Static libraries needed to develop programs that use Bohem's GC.
 export CPPFLAGS="$CPPFLAGS -DUSE_GET_STACKBASE_FOR_MAIN"
 %cmake
 
-%make_build -C build
+%make_build
 
 %check
-make check -C build
+make check
 
 %install
-%make_install -C build
+%make_install
 
 rm -rf %{buildroot}%{_datadir}
 
