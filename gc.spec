@@ -1,9 +1,3 @@
-%ifarch aarch64 %{riscv}
-# Workaround for compile-time failure: Unresolved symbol
-# __data_start at link time
-%global optflags %{optflags} -fuse-ld=bfd
-%endif
-
 %define major 1
 %define cordmajor 1
 %define gccppmajor 1
