@@ -73,6 +73,10 @@ Static libraries needed to develop programs that use Bohem's GC.
 %config_update
 
 %build
+%ifarch %{riscv}
+export CFLAGS="$CFLAGS -DBROKEN_UUENDUU_SYM"
+%endif
+
 export CPPFLAGS="$CPPFLAGS -DUSE_GET_STACKBASE_FOR_MAIN"
 %configure \
     --disable-dependency-tracking \
