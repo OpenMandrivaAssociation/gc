@@ -15,6 +15,7 @@ License:	BSD
 Group:		System/Libraries
 Url:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
 Source0:	https://github.com/ivmai/bdwgc/releases/download/v%{version}/%{name}-%{version}.tar.gz
+Patch0:		gc-8.0.4-riscv.patch
 BuildRequires:	pkgconfig(atomic_ops)
 
 %description
@@ -73,10 +74,6 @@ Static libraries needed to develop programs that use Bohem's GC.
 %config_update
 
 %build
-%ifarch %{riscv}
-export CFLAGS="$CFLAGS -DBROKEN_UUENDUU_SYM"
-%endif
-
 export CPPFLAGS="$CPPFLAGS -DUSE_GET_STACKBASE_FOR_MAIN"
 %configure \
     --disable-dependency-tracking \
