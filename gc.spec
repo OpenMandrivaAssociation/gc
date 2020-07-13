@@ -6,6 +6,10 @@
 %define libgccpp %mklibname gccpp %{gccppmajor}
 %define devname %mklibname %{name} -d
 %define static %mklibname %{name} -d -s
+%ifarch %{riscv}
+%define _disable_lto 1
+%define _disable_ld_no_undefined 1
+%endif
 
 Summary:	Conservative garbage collector for C
 Name:		gc
