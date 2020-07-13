@@ -6,11 +6,14 @@
 %define libgccpp %mklibname gccpp %{gccppmajor}
 %define devname %mklibname %{name} -d
 %define static %mklibname %{name} -d -s
+%ifarch %{armx} %{riscv}
+%define _disable_lto 1
+%endif
 
 Summary:	Conservative garbage collector for C
 Name:		gc
 Version:	8.0.4
-Release:	5
+Release:	6
 License:	BSD
 Group:		System/Libraries
 Url:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
