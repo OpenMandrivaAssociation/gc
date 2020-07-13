@@ -6,10 +6,6 @@
 %define libgccpp %mklibname gccpp %{gccppmajor}
 %define devname %mklibname %{name} -d
 %define static %mklibname %{name} -d -s
-%ifarch %{riscv}
-%define _disable_lto 1
-%define _disable_ld_no_undefined 1
-%endif
 
 Summary:	Conservative garbage collector for C
 Name:		gc
@@ -80,6 +76,12 @@ Static libraries needed to develop programs that use Bohem's GC.
 %config_update
 
 %build
+# (tpg) 2020-07-13 compile with gcc as LLVM/clang segfaults
+%ifarch %{riscv}
+export CC=gcc
+export CXX=g++
+%endif
+
 export CPPFLAGS="$CPPFLAGS -DUSE_GET_STACKBASE_FOR_MAIN"
 %configure \
     --disable-dependency-tracking \
