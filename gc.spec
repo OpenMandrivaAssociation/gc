@@ -6,9 +6,6 @@
 %define libgccpp %mklibname gccpp %{gccppmajor}
 %define devname %mklibname %{name} -d
 %define static %mklibname %{name} -d -s
-%ifarch %{riscv}
-%define _disable_ld_no_undefined 1
-%endif
 
 Summary:	Conservative garbage collector for C
 Name:		gc
@@ -18,6 +15,9 @@ License:	BSD
 Group:		System/Libraries
 Url:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
 Source0:	https://github.com/ivmai/bdwgc/releases/download/v%{version}/%{name}-%{version}.tar.gz
+%ifarch %{riscv}
+Patch0:		0000-Fix-undefined-reference-to-__data_start-linker-error.patch
+%endif
 BuildRequires:	pkgconfig(atomic_ops)
 
 %description
