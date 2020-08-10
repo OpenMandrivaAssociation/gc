@@ -79,8 +79,8 @@ Static libraries needed to develop programs that use Bohem's GC.
 %build
 # (tpg) 2020-07-13 compile with gcc as LLVM/clang segfaults
 %ifarch %{riscv}
-export CC=gcc
-export CXX=g++
+#export CC=gcc
+#export CXX=g++
 %endif
 
 export CPPFLAGS="$CPPFLAGS -DUSE_GET_STACKBASE_FOR_MAIN"
