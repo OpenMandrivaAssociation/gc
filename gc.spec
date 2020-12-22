@@ -6,20 +6,16 @@
 %define libgccpp %mklibname gccpp %{gccppmajor}
 %define devname %mklibname %{name} -d
 %define static %mklibname %{name} -d -s
-%ifarch %{armx} %{riscv}
-%define _disable_lto 1
-%endif
 
 Summary:	Conservative garbage collector for C
 Name:		gc
 Version:	8.0.4
-Release:	6
+Release:	7
 License:	BSD
 Group:		System/Libraries
 Url:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
 Source0:	https://github.com/ivmai/bdwgc/releases/download/v%{version}/%{name}-%{version}.tar.gz
 Patch0:		0000-Fix-undefined-reference-to-__data_start-linker-error.patch
-BuildRequires:	pkgconfig(atomic_ops)
 
 %description
 Boehm's GC is a garbage collecting storage allocator that is intended to be
@@ -57,40 +53,25 @@ Provides:	%{name}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
 Requires:	%{libcord} = %{version}-%{release}
 Requires:	%{libgccpp} = %{version}-%{release}
-# (tpg) somehow this is not required by default
-Requires:	pkgconfig(atomic_ops)
+%rename %{static}
 
 %description -n %{devname}
 Header files and documentation needed to develop programs that use Bohem's GC.
-
-%package -n %{static}
-Summary:	Static libraries for Bohem's GC
-Group:		Development/C
-Provides:	%{name}-static-devel = %{version}-%{release}
-Requires:	%{devname} = %{version}-%{release}
-
-%description -n %{static}
-Static libraries needed to develop programs that use Bohem's GC.
 
 %prep
 %autosetup -p1
 %config_update
 
 %build
-# (tpg) 2020-07-13 compile with gcc as LLVM/clang segfaults
-%ifarch %{riscv}
-#export CC=gcc
-#export CXX=g++
-%endif
-
+# (tpg) use with-libatomic-ops=yes in case of C compiler does not understand C11 intrinsics
 export CPPFLAGS="$CPPFLAGS -DUSE_GET_STACKBASE_FOR_MAIN"
 %configure \
     --disable-dependency-tracking \
     --enable-cplusplus \
-    --enable-static \
+    --disable-static \
     --enable-large-config \
-    --with-libatomic-ops=yes \
-    --enable-parallel-mark \
+    --with-libatomic-ops=none \
+    --disable-parallel-mark \
     --enable-threads=posix
 
 %make_build
@@ -122,6 +103,3 @@ install -m644 doc/gc.man -D %{buildroot}%{_mandir}/man3/gc.3
 %{_includedir}/*h
 %{_libdir}/pkgconfig/*.pc
 %{_mandir}/man?/*
-
-%files -n %{static}
-%{_libdir}/*.a
