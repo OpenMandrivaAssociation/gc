@@ -18,7 +18,9 @@ License:	BSD
 Group:		System/Libraries
 Url:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
 Source0:	https://github.com/ivmai/bdwgc/releases/download/v%{version}/%{name}-%{version}.tar.gz
+%ifarch %{riscv}
 Patch0:		0000-Fix-undefined-reference-to-__data_start-linker-error.patch
+%endif
 
 %description
 Boehm's GC is a garbage collecting storage allocator that is intended to be
