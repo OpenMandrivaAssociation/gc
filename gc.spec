@@ -1,26 +1,23 @@
 %define major 1
 %define cordmajor 1
 %define gccppmajor 1
+%define gctbamajor 1
 %define libname %mklibname %{name} %{major}
 %define libcord %mklibname cord %{cordmajor}
 %define libgccpp %mklibname gccpp %{gccppmajor}
+%define libgctba %mklibname gctba %{gctbamajor}
 %define devname %mklibname %{name} -d
-%define static %mklibname %{name} -d -s
-%ifarch %{armx} %{riscv}
-%define _disable_lto 1
-%endif
 
 Summary:	Conservative garbage collector for C
 Name:		gc
-Version:	8.0.6
+Version:	8.2.0
 Release:	1
 License:	BSD
 Group:		System/Libraries
-Url:		http://www.hpl.hp.com/personal/Hans_Boehm/%{name}/
+Url:		https://www.hboehm.info/%{name}/
 Source0:	https://github.com/ivmai/bdwgc/releases/download/v%{version}/%{name}-%{version}.tar.gz
-%ifarch %{riscv}
-Patch0:		0000-Fix-undefined-reference-to-__data_start-linker-error.patch
-%endif
+
+BuildRequires: cmake
 
 %description
 Boehm's GC is a garbage collecting storage allocator that is intended to be
@@ -51,6 +48,14 @@ Conflicts:	%{_lib}gc1 < 7.3-0.alpha2.2
 %description -n %{libgccpp}
 This package contains a shared library for %{name}.
 
+%package -n %{libgctba}
+Summary:	Conservative garbage collector for C
+Group:		System/Libraries
+Conflicts:	%{_lib}gc1 < 7.3-0.alpha2.2
+
+%description -n %{libgctba}
+This package contains a shared library for %{name}.
+
 %package -n %{devname}
 Summary:	Development files and documentation for Bohem's GC
 Group:		Development/C
@@ -58,38 +63,28 @@ Provides:	%{name}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
 Requires:	%{libcord} = %{version}-%{release}
 Requires:	%{libgccpp} = %{version}-%{release}
-%rename %{static}
+Requires:	%{libgctba} = %{version}-%{release}
 
 %description -n %{devname}
 Header files and documentation needed to develop programs that use Bohem's GC.
 
 %prep
-%autosetup -p1
-%config_update
+%setup -q
 
 %build
-# (tpg) use with-libatomic-ops=yes in case of C compiler does not understand C11 intrinsics
-export CPPFLAGS="$CPPFLAGS -DUSE_GET_STACKBASE_FOR_MAIN"
-%configure \
-    --disable-dependency-tracking \
-    --enable-cplusplus \
-    --disable-static \
-    --enable-large-config \
-    --with-libatomic-ops=none \
-    --disable-parallel-mark \
-    --enable-threads=posix
+# (tpg) Use -Dwith_libatomic_ops=ON in case the C compiler does not understand C11 intrinsics.
+%cmake \
+    -Denable_cplusplus=ON      \
+    -Denable_large_config=ON   \
+    -Denable_parallel_mark=OFF \
 
 %make_build
 
 %check
-make check
+make test -C build
 
 %install
-%make_install
-
-rm -rf %{buildroot}%{_datadir}
-
-install -m644 doc/gc.man -D %{buildroot}%{_mandir}/man3/gc.3
+%make_install -C build
 
 %files -n %{libname}
 %{_libdir}/libgc.so.%{major}*
@@ -100,11 +95,15 @@ install -m644 doc/gc.man -D %{buildroot}%{_mandir}/man3/gc.3
 %files -n %{libgccpp}
 %{_libdir}/libgccpp.so.%{gccppmajor}*
 
+%files -n %{libgctba}
+%{_libdir}/libgctba.so.%{gctbamajor}*
+
 %files -n %{devname}
-%doc README.QUICK doc/*
+%doc %{_docdir}/%{name}/*
 %{_libdir}/*.so
-%dir %{_includedir}/gc
+%dir %{_includedir}/%{name}
 %{_includedir}/%{name}/*
-%{_includedir}/*h
-%{_libdir}/pkgconfig/*.pc
+%{_includedir}/%{name}*.h
+%{_libdir}/cmake/*
+%{_libdir}/pkgconfig/*
 %{_mandir}/man?/*
