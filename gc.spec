@@ -16,6 +16,7 @@ License:	BSD
 Group:		System/Libraries
 Url:		https://www.hboehm.info/%{name}/
 Source0:	https://github.com/ivmai/bdwgc/releases/download/v%{version}/%{name}-%{version}.tar.gz
+Patch0:		Fix-undefined-reference-to-__data_start-on-AArch64.patch
 
 BuildRequires: cmake
 
@@ -69,7 +70,7 @@ Requires:	%{libgctba} = %{version}-%{release}
 Header files and documentation needed to develop programs that use Bohem's GC.
 
 %prep
-%setup -q
+%autosetup -p1
 
 %build
 # (tpg) Use -Dwith_libatomic_ops=ON in case the C compiler does not understand C11 intrinsics.

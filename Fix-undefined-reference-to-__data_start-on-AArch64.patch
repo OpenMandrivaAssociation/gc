@@ -1,0 +1,25 @@
+From c3fc57d261a7ab51e1380b13ece5cd3c8eb09572 Mon Sep 17 00:00:00 2001
+From: Davide Beatrici <git@davidebeatrici.dev>
+Date: Sun, 31 Jul 2022 04:18:51 +0200
+Subject: [PATCH] Fix undefined reference to "__data_start" on AArch64
+
+---
+ include/private/gcconfig.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/private/gcconfig.h b/include/private/gcconfig.h
+index 069057a8..eca61154 100644
+--- a/include/private/gcconfig.h
++++ b/include/private/gcconfig.h
+@@ -2092,7 +2092,7 @@ EXTERN_C_BEGIN
+ #     if defined(HOST_ANDROID)
+ #       define SEARCH_FOR_DATA_START
+ #     else
+-        extern int __data_start[];
++        extern int __data_start[] __attribute__((__weak__));
+ #       define DATASTART ((ptr_t)__data_start)
+ #     endif
+ #   endif
+-- 
+2.35.1
+
