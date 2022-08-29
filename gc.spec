@@ -10,14 +10,12 @@
 
 Summary:	Conservative garbage collector for C
 Name:		gc
-Version:	8.2.0
+Version:	8.2.2
 Release:	1
 License:	BSD
 Group:		System/Libraries
 Url:		https://www.hboehm.info/%{name}/
 Source0:	https://github.com/ivmai/bdwgc/releases/download/v%{version}/%{name}-%{version}.tar.gz
-Patch0:		Fix-undefined-reference-to-__data_start-on-AArch64.patch
-
 BuildRequires: cmake
 
 %description
@@ -107,4 +105,4 @@ make test -C build
 %{_includedir}/%{name}*.h
 %{_libdir}/cmake/*
 %{_libdir}/pkgconfig/*
-%{_mandir}/man?/*
+%doc %{_mandir}/man?/*
