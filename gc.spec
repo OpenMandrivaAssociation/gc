@@ -11,7 +11,7 @@
 Summary:	Conservative garbage collector for C
 Name:		gc
 Version:	8.2.2
-Release:	2
+Release:	3
 License:	BSD
 Group:		System/Libraries
 Url:		https://www.hboehm.info/%{name}/
