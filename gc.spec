@@ -10,8 +10,8 @@
 
 Summary:	Conservative garbage collector for C
 Name:		gc
-Version:	8.2.2
-Release:	3
+Version:	8.2.4
+Release:	1
 License:	BSD
 Group:		System/Libraries
 Url:		https://www.hboehm.info/%{name}/
@@ -56,7 +56,7 @@ Conflicts:	%{_lib}gc1 < 7.3-0.alpha2.2
 This package contains a shared library for %{name}.
 
 %package -n %{devname}
-Summary:	Development files and documentation for Bohem's GC
+Summary:	Development files and documentation for Boehm's GC
 Group:		Development/C
 Provides:	%{name}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
@@ -65,17 +65,16 @@ Requires:	%{libgccpp} = %{version}-%{release}
 Requires:	%{libgctba} = %{version}-%{release}
 
 %description -n %{devname}
-Header files and documentation needed to develop programs that use Bohem's GC.
+Header files and documentation needed to develop programs that use Boehm's GC.
 
 %prep
 %autosetup -p1
 
 %build
-# (tpg) Use -Dwith_libatomic_ops=ON in case the C compiler does not understand C11 intrinsics.
+# (tpg) Use -Dwith_libatomic_ops=ON in case the C compiler does not understand GCC atomic intrinsics.
 %cmake \
     -Denable_cplusplus=ON      \
     -Denable_large_config=ON   \
-    -Denable_parallel_mark=OFF \
 
 %make_build
 
