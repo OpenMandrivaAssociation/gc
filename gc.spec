@@ -10,7 +10,7 @@
 
 Summary:	Conservative garbage collector for C
 Name:		gc
-Version:	8.2.4
+Version:	8.2.6
 Release:	1
 License:	BSD
 Group:		System/Libraries
