@@ -10,12 +10,12 @@
 
 Summary:	Conservative garbage collector for C
 Name:		gc
-Version:	8.2.10
+Version:	8.2.12
 Release:	1
 License:	BSD
 Group:		System/Libraries
 Url:		https://www.hboehm.info/%{name}/
-Source0:	https://github.com/ivmai/bdwgc/releases/download/v%{version}/%{name}-%{version}.tar.gz
+Source0:	https://github.com/bdwgc/bdwgc/releases/download/v%{version}/%{name}-%{version}.tar.gz
 BuildRequires:	cmake
 
 %description
