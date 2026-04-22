@@ -17,7 +17,7 @@ Group:		System/Libraries
 Url:		https://www.hboehm.info/%{name}/
 Source0:	https://github.com/bdwgc/bdwgc/releases/download/v%{version}/%{name}-%{version}.tar.gz
 BuildRequires:	cmake
-BuildRequires:  
+BuildRequires:  make
 
 %description
 Boehm's GC is a garbage collecting storage allocator that is intended to be
